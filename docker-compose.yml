@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  vector-store:
+    build: ./vector-store
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./vector-store/lancedb_data:/app/lancedb_data
+    environment:
+      - PYTHONPATH=/app
+      - LANCEDB_CONFIG_DIR=/app/lancedb_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  api-backend:
+    build: ./api-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - VECTOR_STORE_URL=http://vector-store:8001
+      - PYTHONPATH=/app
+    depends_on:
+      - vector-store
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  streamlit-ui:
+    build: ./streamlit-ui
+    ports:
+      - "8501:8501"
+    environment:
+      - API_BASE_URL=http://api-backend:8000
+      - PYTHONPATH=/app
+    depends_on:
+      - api-backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  lancedb_data:
