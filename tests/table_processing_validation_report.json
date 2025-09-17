@@ -1,0 +1,101 @@
+{
+  "timestamp": "2025-09-16T18:47:41.070029",
+  "table_processing_enabled": true,
+  "test_cases": [
+    {
+      "test_name": "Employee Name Search - Full Row Context",
+      "query": "John Smith Engineering",
+      "success": true,
+      "result_text": "EMP001 John Smith Engineering $85,000",
+      "content_found": [
+        "EMP001",
+        "John Smith",
+        "Engineering",
+        "$85,000"
+      ],
+      "expected_content": [
+        "EMP001",
+        "John Smith",
+        "Engineering",
+        "$85,000"
+      ],
+      "similarity_score": 0.6049896925536561,
+      "response_time_ms": 36.87
+    },
+    {
+      "test_name": "Product Search - Full Row Context",
+      "query": "Wireless Headphones",
+      "success": true,
+      "result_text": "PROD001 Wireless HeadphonesElectronics $129.99",
+      "content_found": [
+        "PROD001",
+        "Wireless",
+        "HeadphonesElectronics",
+        "$129.99"
+      ],
+      "expected_content": [
+        "PROD001",
+        "Wireless",
+        "HeadphonesElectronics",
+        "$129.99"
+      ],
+      "similarity_score": 0.6053003379565075,
+      "response_time_ms": 20.51
+    },
+    {
+      "test_name": "Employee Department Search",
+      "query": "Jane Doe Marketing",
+      "success": true,
+      "result_text": "EMP002 Jane Doe Marketing $75,000",
+      "content_found": [
+        "EMP002",
+        "Jane Doe",
+        "Marketing",
+        "$75,000"
+      ],
+      "expected_content": [
+        "EMP002",
+        "Jane Doe",
+        "Marketing",
+        "$75,000"
+      ],
+      "similarity_score": 0.6088207435188842,
+      "response_time_ms": 25.17
+    },
+    {
+      "test_name": "Product Category Search",
+      "query": "Office Chair Furniture",
+      "success": true,
+      "result_text": "PROD003 Office Chair Furniture $299.99",
+      "content_found": [
+        "PROD003",
+        "Office Chair",
+        "Furniture",
+        "$299.99"
+      ],
+      "expected_content": [
+        "PROD003",
+        "Office Chair",
+        "Furniture",
+        "$299.99"
+      ],
+      "similarity_score": 0.6496896307198826,
+      "response_time_ms": 19.06
+    }
+  ],
+  "summary": {
+    "total_tests": 4,
+    "successful_tests": 4,
+    "success_rate": 100.0,
+    "table_processing_working": true
+  },
+  "test_document": {
+    "document_id": "53018cc9-b12d-4360-9a1b-d8f25ef9aa15",
+    "filename": "table_test_document.pdf",
+    "upload_date": "2025-09-17T01:47:33.749269",
+    "lines_count": 11,
+    "first_page": 1,
+    "last_page": 1
+  },
+  "document_lines": 11
+}

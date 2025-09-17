@@ -1,0 +1,39 @@
+{
+  "startup": true,
+  "document_listing": true,
+  "document_uploads": {
+    "total": 2,
+    "successful": 2,
+    "success_rate": 1.0
+  },
+  "search_tests": {
+    "total": 4,
+    "successful": 0,
+    "success_rate": 0.0,
+    "details": [
+      {
+        "name": "Basic Text Search",
+        "success": false,
+        "result_count": 0
+      },
+      {
+        "name": "Employee Search",
+        "success": false,
+        "result_count": 0
+      },
+      {
+        "name": "Department Search",
+        "success": false,
+        "result_count": 0
+      },
+      {
+        "name": "Generic Search",
+        "success": false,
+        "result_count": 0
+      }
+    ]
+  },
+  "individual_delete": true,
+  "bulk_delete": true,
+  "deletion_verification": true
+}

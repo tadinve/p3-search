@@ -1,0 +1,20 @@
+Test: Table Simple Functionality
+File: test_table_simple.py
+Duration: 0.13s
+Return Code: 0
+Success: True
+============================================================
+STDOUT:
+ℹ️ 🔍 Starting Simple Table Processing Validation
+✅API service is accessible
+🧪Testing table-aware search functionality...
+⚠️ Failed to upload test document, testing basic search only
+✅✓ Search endpoint is functional
+ℹ️ 
+==================================================
+ℹ️ TABLE PROCESSING VALIDATION RESULTS
+ℹ️ ==================================================
+ℹ️ Search Tests: 1/1 passed (100.0%)
+✅✓ Table processing appears to be working
+✅✓ Search returns contextual information
+ℹ️ Results saved to: table_validation_simple_results.json

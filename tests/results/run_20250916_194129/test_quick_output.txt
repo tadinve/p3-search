@@ -1,0 +1,44 @@
+Test: Quick Comprehensive Test
+File: test_quick.py
+Duration: 10.43s
+Return Code: 0
+Success: True
+============================================================
+STDOUT:
+ℹ️ 🚀 Starting PDF Search System Quick Test Suite
+🧪Testing Docker Services
+ℹ️ Starting Docker Compose services...
+✅Services started successfully
+ℹ️ Waiting for services to be ready...
+✅API Backend: Accessible
+✅Vector Store: Accessible
+✅Streamlit UI: Accessible
+✅All services are ready
+🧪Testing API Endpoints
+ℹ️ Testing document listing...
+✅Document listing works: 0 documents
+ℹ️ Testing search endpoint...
+✅Search endpoint works: 4 results
+ℹ️ Testing delete endpoint...
+✅Delete endpoint works
+🧪Testing Service Communication
+ℹ️ Testing API ↔ Vector Store communication...
+✅Services are communicating properly
+🧪Testing System Health
+✅API Backend: Accessible
+✅Vector Store: Accessible
+✅Streamlit UI: Accessible
+✅System health: 100% - Excellent
+ℹ️ ==================================================
+ℹ️ COMPREHENSIVE TEST RESULTS
+ℹ️ ==================================================
+ℹ️ Docker Services:        PASS
+ℹ️ Document Listing:       PASS
+ℹ️ Search Functionality:   PASS
+ℹ️ Delete Operations:      PASS
+ℹ️ Service Communication:  PASS
+ℹ️ System Health:          EXCELLENT
+ℹ️ --------------------------------------------------
+✅OVERALL STATUS: ALL SYSTEMS OPERATIONAL
+ℹ️ --------------------------------------------------
+ℹ️ Results saved to: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/test_results_quick.json

@@ -1,0 +1,97 @@
+{
+  "timestamp": "2025-09-16T19:41:29.468690",
+  "run_id": "run_20250916_194129",
+  "run_directory": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129",
+  "total_tests": 8,
+  "passed_tests": 8,
+  "failed_tests": 0,
+  "skipped_tests": 0,
+  "total_duration": 86.2264518737793,
+  "test_results": [
+    {
+      "test_name": "Quick Comprehensive Test",
+      "test_file": "test_quick.py",
+      "success": true,
+      "duration": 10.43,
+      "return_code": 0,
+      "has_output": true,
+      "has_errors": false,
+      "output_file": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129/test_quick_output.txt"
+    },
+    {
+      "test_name": "Simple Validation Test",
+      "test_file": "test_simple.py",
+      "success": true,
+      "duration": 14.23,
+      "return_code": 0,
+      "has_output": true,
+      "has_errors": false,
+      "output_file": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129/test_simple_output.txt"
+    },
+    {
+      "test_name": "Advanced Performance Test",
+      "test_file": "test_advanced.py",
+      "success": true,
+      "duration": 23.14,
+      "return_code": 0,
+      "has_output": true,
+      "has_errors": false,
+      "output_file": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129/test_advanced_output.txt"
+    },
+    {
+      "test_name": "System Integration Test",
+      "test_file": "test_system.py",
+      "success": true,
+      "duration": 2.56,
+      "return_code": 0,
+      "has_output": true,
+      "has_errors": false,
+      "output_file": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129/test_system_output.txt"
+    },
+    {
+      "test_name": "Comprehensive Professional Test",
+      "test_file": "test_comprehensive.py",
+      "success": true,
+      "duration": 35.37,
+      "return_code": 0,
+      "has_output": true,
+      "has_errors": false,
+      "output_file": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129/test_comprehensive_output.txt"
+    },
+    {
+      "test_name": "Table PDF Processing",
+      "test_file": "test_table_pdf.py",
+      "success": true,
+      "duration": 0.23,
+      "return_code": 0,
+      "has_output": true,
+      "has_errors": false,
+      "output_file": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129/test_table_pdf_output.txt"
+    },
+    {
+      "test_name": "Table Simple Functionality",
+      "test_file": "test_table_simple.py",
+      "success": true,
+      "duration": 0.15,
+      "return_code": 0,
+      "has_output": true,
+      "has_errors": false,
+      "output_file": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129/test_table_simple_output.txt"
+    },
+    {
+      "test_name": "Table Validation",
+      "test_file": "test_table_validation.py",
+      "success": true,
+      "duration": 0.12,
+      "return_code": 0,
+      "has_output": true,
+      "has_errors": false,
+      "output_file": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_194129/test_table_validation_output.txt"
+    }
+  ],
+  "system_info": {
+    "python_version": "3.11.6 (v3.11.6:8b6ee5ba3b, Oct  2 2023, 11:18:21) [Clang 13.0.0 (clang-1300.0.29.30)]",
+    "working_directory": "/Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests",
+    "platform": "darwin"
+  }
+}

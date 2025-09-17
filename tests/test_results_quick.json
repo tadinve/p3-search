@@ -1,0 +1,8 @@
+{
+  "services_startup": true,
+  "document_listing": true,
+  "search_endpoint": true,
+  "delete_endpoint": true,
+  "service_communication": true,
+  "system_health": "excellent"
+}

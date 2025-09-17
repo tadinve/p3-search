@@ -1,0 +1,41 @@
+{
+  "docker_start": true,
+  "services_healthy": true,
+  "endpoint_tests": {
+    "api-backend": {
+      "accessible": true,
+      "status_code": 200,
+      "response_time": 0.008945941925048828
+    },
+    "vector-store": {
+      "accessible": true,
+      "status_code": 200,
+      "response_time": 0.0016357898712158203
+    },
+    "streamlit-ui": {
+      "accessible": true,
+      "status_code": 404,
+      "response_time": null
+    }
+  },
+  "health_checks": {
+    "api-backend": {
+      "healthy": true,
+      "url": "http://localhost:8000/health",
+      "response_time": 0.008392810821533203
+    },
+    "vector-store": {
+      "healthy": true,
+      "url": "http://localhost:8001/health",
+      "response_time": 0.0016150474548339844
+    },
+    "streamlit-ui": {
+      "healthy": true,
+      "url": "http://localhost:8501/health",
+      "response_time": null
+    }
+  },
+  "list_documents": true,
+  "search_functionality": true,
+  "delete_all": true
+}

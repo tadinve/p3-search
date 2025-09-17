@@ -1,0 +1,13 @@
+Employee Information System
+
+Employee Table:
+Employee ID | Name | Department | Salary
+EMP001 | John Smith | Engineering | 85000
+EMP002 | Sarah Johnson | Marketing | 70000
+EMP003 | Mike Chen | Engineering | 90000
+
+Product Information:
+Product Code | Product Name | Category | Price
+PROD001 | Wireless Headphones | Electronics | 129.99
+PROD002 | Coffee Mug | Kitchen | 19.99
+PROD003 | Office Chair | Furniture | 299.99

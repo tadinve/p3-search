@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse
 import lancedb
 import PyPDF2
+import pdfplumber
 from sentence_transformers import SentenceTransformer
 import numpy as np
 import uuid
@@ -66,29 +67,97 @@ class DocumentInfo(BaseModel):
     last_page: int
 
 def extract_text_from_pdf(pdf_file) -> List[Dict[str, Any]]:
-    """Extract text from PDF and return as list of line objects with page info"""
+    """Extract text from PDF and return as list of line objects with page info, treating table rows as single lines"""
     try:
-        pdf_reader = PyPDF2.PdfReader(pdf_file)
         text_lines = []
         global_line_number = 1
         
-        for page_number, page in enumerate(pdf_reader.pages, 1):
-            page_text = page.extract_text()
-            lines = page_text.split('\n')
-            # Filter out empty lines and strip whitespace
-            lines = [line.strip() for line in lines if line.strip()]
-            
-            for line_content in lines:
-                text_lines.append({
-                    "content": line_content,
-                    "page_number": page_number,
-                    "line_number": global_line_number
-                })
-                global_line_number += 1
+        # Reset file pointer to beginning
+        pdf_file.seek(0)
+        
+        # Use pdfplumber for better table detection
+        with pdfplumber.open(pdf_file) as pdf:
+            for page_number, page in enumerate(pdf.pages, 1):
+                # Extract tables from the page
+                tables = page.extract_tables()
+                table_cells = set()  # Keep track of table cell positions
+                
+                # Process tables first and mark their cell positions
+                for table in tables:
+                    for row_idx, row in enumerate(table):
+                        if row and any(cell and str(cell).strip() for cell in row):  # Skip empty rows
+                            # Combine all cells in the row into a single line
+                            row_text_parts = []
+                            for cell in row:
+                                if cell and str(cell).strip():
+                                    row_text_parts.append(str(cell).strip())
+                            
+                            if row_text_parts:  # Only add non-empty rows
+                                row_text = " | ".join(row_text_parts)  # Use | as column separator
+                                text_lines.append({
+                                    "content": f"[TABLE] {row_text}",  # Mark as table content
+                                    "page_number": page_number,
+                                    "line_number": global_line_number,
+                                    "is_table": True
+                                })
+                                global_line_number += 1
+                
+                # Extract regular text, but try to avoid table content
+                page_text = page.extract_text()
+                if page_text:
+                    lines = page_text.split('\n')
+                    # Filter out empty lines and strip whitespace
+                    lines = [line.strip() for line in lines if line.strip()]
+                    
+                    for line_content in lines:
+                        # Skip lines that are likely part of tables we've already processed
+                        # This is a heuristic - if the line contains multiple separated values, it might be a table
+                        is_likely_table_line = False
+                        if tables:  # Only apply this logic if tables were found on the page
+                            # Check if this line looks like table data (contains multiple | or tab-separated values)
+                            separators = ['\t', '  ', '   ', '    ']  # Common table separators
+                            for sep in separators:
+                                if len(line_content.split(sep)) >= 3:  # Likely table if 3+ columns
+                                    is_likely_table_line = True
+                                    break
+                        
+                        # Only add non-table lines or if no tables were found on this page
+                        if not is_likely_table_line or not tables:
+                            text_lines.append({
+                                "content": line_content,
+                                "page_number": page_number,
+                                "line_number": global_line_number,
+                                "is_table": False
+                            })
+                            global_line_number += 1
         
         return text_lines
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error processing PDF: {str(e)}")
+        # Fallback to PyPDF2 if pdfplumber fails
+        try:
+            pdf_file.seek(0)
+            pdf_reader = PyPDF2.PdfReader(pdf_file)
+            text_lines = []
+            global_line_number = 1
+            
+            for page_number, page in enumerate(pdf_reader.pages, 1):
+                page_text = page.extract_text()
+                lines = page_text.split('\n')
+                # Filter out empty lines and strip whitespace
+                lines = [line.strip() for line in lines if line.strip()]
+                
+                for line_content in lines:
+                    text_lines.append({
+                        "content": line_content,
+                        "page_number": page_number,
+                        "line_number": global_line_number,
+                        "is_table": False
+                    })
+                    global_line_number += 1
+            
+            return text_lines
+        except Exception as fallback_error:
+            raise HTTPException(status_code=400, detail=f"Error processing PDF: {str(e)} (Fallback error: {str(fallback_error)})")
 
 def generate_embedding(text: str) -> List[float]:
     """Generate embedding for text using sentence transformer"""
@@ -132,6 +201,7 @@ async def upload_pdf(file: UploadFile = File(...)):
                     "line_number": line_data["line_number"],
                     "filename": file.filename,
                     "upload_date": upload_date,
+                    "is_table": line_data.get("is_table", False),
                     "vector": vector
                 }
                 documents_to_insert.append(document_entry)

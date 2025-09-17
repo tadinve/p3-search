@@ -1,0 +1,194 @@
+{
+  "docker_start": true,
+  "services_healthy": true,
+  "services_status": {
+    "api-backend": {
+      "status": "running",
+      "health": "healthy",
+      "ports": [
+        {
+          "URL": "0.0.0.0",
+          "TargetPort": 8000,
+          "PublishedPort": 8000,
+          "Protocol": "tcp"
+        },
+        {
+          "URL": "::",
+          "TargetPort": 8000,
+          "PublishedPort": 8000,
+          "Protocol": "tcp"
+        }
+      ],
+      "name": "p3-search-api-backend-1"
+    },
+    "streamlit-ui": {
+      "status": "running",
+      "health": "healthy",
+      "ports": [
+        {
+          "URL": "0.0.0.0",
+          "TargetPort": 8501,
+          "PublishedPort": 8501,
+          "Protocol": "tcp"
+        },
+        {
+          "URL": "::",
+          "TargetPort": 8501,
+          "PublishedPort": 8501,
+          "Protocol": "tcp"
+        }
+      ],
+      "name": "p3-search-streamlit-ui-1"
+    },
+    "vector-store": {
+      "status": "running",
+      "health": "healthy",
+      "ports": [
+        {
+          "URL": "0.0.0.0",
+          "TargetPort": 8001,
+          "PublishedPort": 8001,
+          "Protocol": "tcp"
+        },
+        {
+          "URL": "::",
+          "TargetPort": 8001,
+          "PublishedPort": 8001,
+          "Protocol": "tcp"
+        }
+      ],
+      "name": "p3-search-vector-store-1"
+    }
+  },
+  "api_health": {
+    "api_backend_health": {
+      "accessible": true,
+      "status_code": 200,
+      "response_time": 0.011164
+    },
+    "vector_store_health": {
+      "accessible": true,
+      "status_code": 200,
+      "response_time": 0.001437
+    }
+  },
+  "initial_cleanup": {
+    "success": true,
+    "status_code": 200,
+    "response": {
+      "message": "All documents deleted successfully",
+      "deleted_documents": 1,
+      "deleted_lines": 11
+    },
+    "response_time": 0.025052
+  },
+  "upload_simple": {
+    "success": true,
+    "status_code": 200,
+    "response": {
+      "document_id": "f01263f8-ff7d-487d-8c6b-4ef429389a94",
+      "filename": "simple_test.pdf",
+      "lines_processed": 1,
+      "message": "PDF uploaded and processed successfully"
+    },
+    "response_time": 0.070033
+  },
+  "upload_table": {
+    "success": true,
+    "status_code": 200,
+    "response": {
+      "document_id": "9587118f-f032-43f9-938f-0242a6931618",
+      "filename": "table_test.pdf",
+      "lines_processed": 9,
+      "message": "PDF uploaded and processed successfully"
+    },
+    "response_time": 0.151981
+  },
+  "list_documents": {
+    "success": true,
+    "status_code": 200,
+    "documents": [
+      {
+        "document_id": "9587118f-f032-43f9-938f-0242a6931618",
+        "filename": "table_test.pdf",
+        "upload_date": "2025-09-17T02:45:02.865006",
+        "lines_count": 9,
+        "first_page": 1,
+        "last_page": 1
+      },
+      {
+        "document_id": "f01263f8-ff7d-487d-8c6b-4ef429389a94",
+        "filename": "simple_test.pdf",
+        "upload_date": "2025-09-17T02:45:02.793510",
+        "lines_count": 1,
+        "first_page": 1,
+        "last_page": 1
+      }
+    ],
+    "response_time": 0.013285
+  },
+  "search_basic": {
+    "success": true,
+    "status_code": 200,
+    "results": {
+      "query": "simple test document",
+      "response_time_ms": 24.75,
+      "number_of_results": 1,
+      "results": [
+        {
+          "document_id": "f01263f8-ff7d-487d-8c6b-4ef429389a94",
+          "filename": "simple_test.pdf",
+          "page_number": 1,
+          "line_number": 1,
+          "text_fragment": "This is a simple test document with basic text content for testing purposes.",
+          "similarity_score": 0.7404022233934698
+        }
+      ]
+    },
+    "response_time": 0.026036
+  },
+  "search_table": {
+    "success": true,
+    "status_code": 200,
+    "results": {
+      "query": "John Smith",
+      "response_time_ms": 22.26,
+      "number_of_results": 0,
+      "results": []
+    },
+    "response_time": 0.023562
+  },
+  "search_department": {
+    "success": true,
+    "status_code": 200,
+    "results": {
+      "query": "Engineering",
+      "response_time_ms": 26.24,
+      "number_of_results": 0,
+      "results": []
+    },
+    "response_time": 0.027452
+  },
+  "search_success_rate": 1.0,
+  "delete_individual": {
+    "success": true,
+    "status_code": 200,
+    "response": {
+      "message": "Document deleted successfully",
+      "document_id": "9587118f-f032-43f9-938f-0242a6931618",
+      "filename": "table_test.pdf",
+      "deleted_lines": 9
+    },
+    "response_time": 0.026879
+  },
+  "delete_all": {
+    "success": true,
+    "status_code": 200,
+    "response": {
+      "message": "All documents deleted successfully",
+      "deleted_documents": 1,
+      "deleted_lines": 1
+    },
+    "response_time": 0.012857
+  }
+}

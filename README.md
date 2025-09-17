@@ -330,13 +330,32 @@ result.results.forEach(match => {
 ## Development
 
 ### Running Tests
-```bash
-# Install test dependencies
-pip install pytest httpx
 
-# Run tests (create test files as needed)
-pytest
+All test files and testing utilities are organized in the `tests/` directory.
+
+**One Command Testing (Recommended):**
+```bash
+cd tests
+python test.py
 ```
+
+That's it! This single command will:
+- Install any missing dependencies automatically
+- Run all test suites sequentially  
+- Provide a comprehensive summary
+- Save detailed results to JSON
+
+**Individual Test Suites:**
+```bash
+cd tests
+
+# Run specific tests
+python test_quick.py      # Quick comprehensive test
+python test_simple.py     # Basic validation test  
+python test_advanced.py   # Performance and metrics test
+```
+
+For detailed testing information, see `tests/README.md`.
 
 ### Environment Variables
 

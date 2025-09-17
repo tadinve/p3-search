@@ -1,0 +1,16 @@
+Table Processing Test Document
+
+Employee Information Table:
+Employee ID | Name | Department | Salary
+EMP001 | John Smith | Engineering | 85000
+EMP002 | Jane Doe | Marketing | 75000  
+EMP003 | Bob Johnson | Sales | 70000
+
+Product Catalog Table:
+Product Code | Name | Category | Price
+PROD001 | Wireless Headphones | Electronics | 129.99
+PROD002 | Coffee Mug | Kitchen | 19.99
+PROD003 | Office Chair | Furniture | 299.99
+
+This document contains structured data in table format. 
+Each row should be treated as a single unit for search purposes.

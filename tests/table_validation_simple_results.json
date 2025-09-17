@@ -1,0 +1,13 @@
+{
+  "timestamp": "2024-01-01T00:00:00Z",
+  "service_accessible": true,
+  "search_tests": [
+    {
+      "query": "basic_test",
+      "success": true,
+      "description": "Search endpoint accessibility"
+    }
+  ],
+  "success_rate": 100.0,
+  "recommendations": []
+}

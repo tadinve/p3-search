@@ -1,0 +1,8 @@
+Test: Table PDF Processing
+File: test_table_pdf.py
+Duration: 0.23s
+Return Code: 0
+Success: True
+============================================================
+STDOUT:
+Test PDF already exists: test_document_with_tables.pdf
