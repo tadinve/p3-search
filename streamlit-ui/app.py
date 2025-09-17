@@ -7,47 +7,7 @@ from typing import List, Dict, Any
 
 # Configuration
 API_BASE_URL = "http://api-backend:8000"  # Docker internal URL
-# For local development, use: "                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        if st.button("📄 View Document Contents", use_container_width=True):
-                            # This would require calling the /documents/{document_id} endpoint
-                            # For now, show document info
-                            st.info(f"Document ID: {selected_document['document_id']}")
-                            st.info(f"To view full contents, use the API endpoint: GET /documents/{selected_document['document_id']}")
-                    
-                    with col2:
-                        if st.button("🔍 Search in This Document", use_container_width=True):
-                            st.info("Use the Search Documents tab and filter results by document ID to search within this specific document.")
-                    
-                    with col3:
-                        if st.button("🗑️ Delete Document", use_container_width=True, type="secondary"):
-                            # Show confirmation dialog
-                            st.warning(f"⚠️ Are you sure you want to delete '{selected_document['filename']}'?")
-                            col_confirm1, col_confirm2 = st.columns(2)
-                            
-                            with col_confirm1:
-                                if st.button("✅ Yes, Delete", key="confirm_delete", type="primary"):
-                                    try:
-                                        delete_response = requests.delete(
-                                            f"{get_api_url()}/documents/{selected_document['document_id']}",
-                                            timeout=30
-                                        )
-                                        
-                                        if delete_response.status_code == 200:
-                                            result = delete_response.json()
-                                            st.success(f"✅ Document '{result['filename']}' deleted successfully!")
-                                            st.info(f"Deleted {result['deleted_lines']} lines")
-                                            time.sleep(2)
-                                            st.rerun()
-                                        else:
-                                            st.error(f"❌ Failed to delete document: {delete_response.text}")
-                                    
-                                    except Exception as e:
-                                        st.error(f"❌ Error deleting document: {str(e)}")
-                            
-                            with col_confirm2:
-                                if st.button("❌ Cancel", key="cancel_delete"):
-                                    st.rerun()lhost:8000"
+# For local development, use: "http://localhost:8000"
 
 def get_api_url():
     """Get the appropriate API URL based on environment"""
@@ -97,6 +57,13 @@ st.markdown("""
         padding: 1rem;
         border-radius: 8px;
         text-align: center;
+    }
+    .danger-zone {
+        background-color: #fff5f5;
+        border: 2px solid #fed7d7;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -268,17 +235,110 @@ def list_documents():
                     doc_index = [f"{doc['filename']} ({doc['document_id'][:8]}...)" for doc in documents].index(selected_doc)
                     selected_document = documents[doc_index]
                     
-                    col1, col2 = st.columns(2)
+                    col1, col2, col3 = st.columns(3)
                     with col1:
-                        if st.button("� View Document Contents", use_container_width=True):
-                            # This would require calling the /documents/{document_id} endpoint
-                            # For now, show document info
+                        if st.button("📄 View Document Contents", use_container_width=True):
                             st.info(f"Document ID: {selected_document['document_id']}")
                             st.info(f"To view full contents, use the API endpoint: GET /documents/{selected_document['document_id']}")
                     
                     with col2:
                         if st.button("🔍 Search in This Document", use_container_width=True):
                             st.info("Use the Search Documents tab and filter results by document ID to search within this specific document.")
+                    
+                    with col3:
+                        if st.button("🗑️ Delete Document", use_container_width=True, type="secondary"):
+                            # Use session state to manage confirmation
+                            if 'confirm_delete' not in st.session_state:
+                                st.session_state.confirm_delete = False
+                            
+                            if not st.session_state.confirm_delete:
+                                st.session_state.confirm_delete = True
+                                st.rerun()
+                    
+                    # Show confirmation dialog if delete was clicked
+                    if st.session_state.get('confirm_delete', False):
+                        st.warning(f"⚠️ Are you sure you want to delete '{selected_document['filename']}'?")
+                        col_confirm1, col_confirm2 = st.columns(2)
+                        
+                        with col_confirm1:
+                            if st.button("✅ Yes, Delete", key="confirm_delete_btn", type="primary"):
+                                try:
+                                    delete_response = requests.delete(
+                                        f"{get_api_url()}/documents/{selected_document['document_id']}",
+                                        timeout=30
+                                    )
+                                    
+                                    if delete_response.status_code == 200:
+                                        result = delete_response.json()
+                                        st.success(f"✅ Document '{result['filename']}' deleted successfully!")
+                                        st.info(f"Deleted {result['deleted_lines']} lines")
+                                        st.session_state.confirm_delete = False
+                                        time.sleep(2)
+                                        st.rerun()
+                                    else:
+                                        st.error(f"❌ Failed to delete document: {delete_response.text}")
+                                        st.session_state.confirm_delete = False
+                                
+                                except Exception as e:
+                                    st.error(f"❌ Error deleting document: {str(e)}")
+                                    st.session_state.confirm_delete = False
+                        
+                        with col_confirm2:
+                            if st.button("❌ Cancel", key="cancel_delete_btn"):
+                                st.session_state.confirm_delete = False
+                                st.rerun()
+                
+                # Bulk actions section
+                st.markdown("### 🔧 Bulk Actions")
+                st.markdown('<div class="danger-zone">', unsafe_allow_html=True)
+                st.error("⚠️ **Danger Zone** - These actions cannot be undone!")
+                
+                if st.button("🗑️ Delete All Documents", type="secondary", use_container_width=True):
+                    # Use session state for bulk delete confirmation
+                    if 'confirm_delete_all' not in st.session_state:
+                        st.session_state.confirm_delete_all = False
+                    
+                    if not st.session_state.confirm_delete_all:
+                        st.session_state.confirm_delete_all = True
+                        st.rerun()
+                
+                # Show bulk delete confirmation
+                if st.session_state.get('confirm_delete_all', False):
+                    st.error("⚠️ **DANGER**: This will permanently delete ALL documents!")
+                    st.write("Type 'DELETE ALL' to confirm:")
+                    
+                    confirmation_text = st.text_input("Confirmation:", key="delete_all_confirm")
+                    
+                    col_confirm1, col_confirm2 = st.columns(2)
+                    with col_confirm1:
+                        if st.button("💀 Confirm Deletion", key="confirm_delete_all_btn", type="primary", disabled=(confirmation_text != "DELETE ALL")):
+                            try:
+                                delete_response = requests.delete(
+                                    f"{get_api_url()}/documents",
+                                    timeout=30
+                                )
+                                
+                                if delete_response.status_code == 200:
+                                    result = delete_response.json()
+                                    st.success(f"✅ {result['message']}")
+                                    st.info(f"Deleted {result.get('deleted_documents', 0)} documents and {result.get('deleted_lines', 0)} lines")
+                                    st.session_state.confirm_delete_all = False
+                                    time.sleep(3)
+                                    st.rerun()
+                                else:
+                                    st.error(f"❌ Failed to delete documents: {delete_response.text}")
+                                    st.session_state.confirm_delete_all = False
+                            
+                            except Exception as e:
+                                st.error(f"❌ Error deleting all documents: {str(e)}")
+                                st.session_state.confirm_delete_all = False
+                    
+                    with col_confirm2:
+                        if st.button("❌ Cancel All", key="cancel_delete_all_btn"):
+                            st.session_state.confirm_delete_all = False
+                            st.rerun()
+                
+                st.markdown('</div>', unsafe_allow_html=True)
             
             else:
                 st.info("📭 No documents found in the library.")
@@ -412,25 +472,109 @@ def search_documents():
                     if search_results["results"]:
                         st.markdown("### 📋 Search Results")
                         
+                        # Create DataFrame for table display
+                        table_data = []
                         for i, result in enumerate(search_results["results"], 1):
-                            with st.container():
-                                st.markdown(f"""
-                                <div class="result-card">
-                                    <h4>📄 Result #{i} - {result['filename']}</h4>
-                                    <p><strong>📍 Location:</strong> Page {result['page_number']}, Line {result['line_number']}</p>
-                                    <p><strong>🎯 Similarity Score:</strong> {result['similarity_score']:.3f}</p>
-                                    <p><strong>📝 Text:</strong></p>
-                                    <blockquote style="background-color: #f8f9fa; padding: 10px; border-left: 3px solid #007bff; margin: 10px 0;">
-                                        {result['text_fragment']}
-                                    </blockquote>
-                                    <p><small><strong>🆔 Document ID:</strong> {result['document_id']}</small></p>
-                                </div>
-                                """, unsafe_allow_html=True)
+                            table_data.append({
+                                "📄 Document ID": result['document_id'][:12] + "...",  # Shortened for display
+                                "📁 Name": result['filename'],
+                                "📖 Page #": result['page_number'],
+                                "📝 Line #": result['line_number'],
+                                "🎯 Score": f"{result['similarity_score']:.2f}",
+                                "📄 Text": result['text_fragment'][:100] + "..." if len(result['text_fragment']) > 100 else result['text_fragment']
+                            })
+                        
+                        # Display the table
+                        results_df = pd.DataFrame(table_data)
+                        
+                        # Configure column widths and display
+                        st.dataframe(
+                            results_df,
+                            use_container_width=True,
+                            hide_index=True,
+                            column_config={
+                                "📄 Document ID": st.column_config.TextColumn(
+                                    "Document ID",
+                                    width="small",
+                                    help="Unique identifier for the document"
+                                ),
+                                "📁 Name": st.column_config.TextColumn(
+                                    "Filename",
+                                    width="medium",
+                                    help="Name of the PDF document"
+                                ),
+                                "📖 Page #": st.column_config.NumberColumn(
+                                    "Page",
+                                    width="small",
+                                    help="Page number in the document"
+                                ),
+                                "📝 Line #": st.column_config.NumberColumn(
+                                    "Line",
+                                    width="small", 
+                                    help="Line number in the document"
+                                ),
+                                "🎯 Score": st.column_config.TextColumn(
+                                    "Similarity",
+                                    width="small",
+                                    help="Similarity score (0.00-1.00)"
+                                ),
+                                "📄 Text": st.column_config.TextColumn(
+                                    "Text Fragment",
+                                    width="large",
+                                    help="Matching text content"
+                                )
+                            }
+                        )
+                        
+                        # Show expandable full text for detailed view
+                        with st.expander("� View Full Text Details"):
+                            selected_result = st.selectbox(
+                                "Select a result to view full text:",
+                                options=[f"Result #{i+1} - {result['filename']} (Page {result['page_number']}, Line {result['line_number']})" 
+                                        for i, result in enumerate(search_results["results"])],
+                                help="Choose a result to see the complete text fragment"
+                            )
+                            
+                            if selected_result:
+                                # Find the selected result
+                                result_index = int(selected_result.split("#")[1].split(" ")[0]) - 1
+                                selected_result_data = search_results["results"][result_index]
+                                
+                                # Display full details
+                                col1, col2 = st.columns([1, 2])
+                                
+                                with col1:
+                                    st.markdown("**� Document Details:**")
+                                    st.write(f"**Document ID:** {selected_result_data['document_id']}")
+                                    st.write(f"**Filename:** {selected_result_data['filename']}")
+                                    st.write(f"**Page:** {selected_result_data['page_number']}")
+                                    st.write(f"**Line:** {selected_result_data['line_number']}")
+                                    st.write(f"**Similarity Score:** {selected_result_data['similarity_score']:.4f}")
+                                
+                                with col2:
+                                    st.markdown("**📝 Full Text:**")
+                                    st.markdown(f"""
+                                    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #007bff;">
+                                        {selected_result_data['text_fragment']}
+                                    </div>
+                                    """, unsafe_allow_html=True)
                         
                         # Export options
                         if st.button("📥 Export Results as CSV"):
-                            results_df = pd.DataFrame(search_results["results"])
-                            csv = results_df.to_csv(index=False)
+                            # Create export DataFrame with full data
+                            export_data = []
+                            for result in search_results["results"]:
+                                export_data.append({
+                                    "document_id": result['document_id'],
+                                    "filename": result['filename'],
+                                    "page_number": result['page_number'],
+                                    "line_number": result['line_number'],
+                                    "similarity_score": f"{result['similarity_score']:.4f}",
+                                    "text_fragment": result['text_fragment']
+                                })
+                            
+                            export_df = pd.DataFrame(export_data)
+                            csv = export_df.to_csv(index=False)
                             st.download_button(
                                 label="⬇️ Download CSV",
                                 data=csv,
@@ -482,7 +626,8 @@ def main():
         ### 📖 How to Use
         1. **Upload PDFs** - Add documents to search
         2. **Search** - Find relevant content
-        3. **Explore** - Review results and export data
+        3. **Manage** - View and delete documents
+        4. **Export** - Download results and data
         """)
     
     # Main content based on selected page

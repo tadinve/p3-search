@@ -333,6 +333,7 @@ async def delete_all_documents():
 @app.delete("/documents/{document_id}")
 async def delete_document(document_id: str):
     """Delete a specific document by document ID"""
+    global table
     try:
         current_table = get_table()
         if current_table is None:
@@ -365,7 +366,6 @@ async def delete_document(document_id: str):
             db = lancedb.connect(DB_PATH)
             try:
                 db.drop_table("documents")
-                global table
                 table = None
             except Exception:
                 pass
@@ -379,7 +379,6 @@ async def delete_document(document_id: str):
             
             # Convert DataFrame back to list of dicts for LanceDB
             remaining_records = remaining_data.to_dict('records')
-            global table
             table = db.create_table("documents", remaining_records)
         
         return {
