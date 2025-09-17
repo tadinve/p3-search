@@ -1,1 +1,8 @@
 venv/** 
+tests/test_results.json
+tests/results/*
+vector-store/lancedb_data/*
+tests/complete_test_results.json
+tests/test_results_comprehensive.json
+tests/test_results.json
+.DS_Store
