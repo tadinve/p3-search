@@ -226,6 +226,59 @@ async def upload_pdf(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing file: {str(e)}")
 
+@app.post("/upload-text")
+async def upload_text(request: dict):
+    """Upload plain text for testing similarity scores"""
+    try:
+        filename = request.get("filename", "test.txt")
+        content = request.get("content", "")
+        
+        if not content.strip():
+            raise HTTPException(status_code=400, detail="Content cannot be empty")
+        
+        # Initialize table if needed
+        current_table = get_table()
+        if current_table is None:
+            # Create table with first document
+            pass  # We'll add to create_table_with_data call below
+        
+        document_id = str(uuid.uuid4())
+        documents_to_insert = []
+        
+        # Split content into lines and create embeddings
+        lines = content.strip().split('\n')
+        for line_num, line in enumerate(lines, 1):
+            line_content = line.strip()
+            if line_content:  # Skip empty lines
+                vector = generate_embedding(line_content)
+                
+                documents_to_insert.append({
+                    "document_id": document_id,
+                    "filename": filename,
+                    "page_number": 1,
+                    "line_number": line_num,
+                    "content": line_content,
+                    "vector": vector,
+                    "created_at": datetime.now().isoformat()
+                })
+        
+        # Insert documents
+        if documents_to_insert:
+            if current_table is None:
+                current_table = create_table_with_data(documents_to_insert)
+            else:
+                current_table.add(documents_to_insert)
+        
+        return {
+            "document_id": document_id,
+            "filename": filename,
+            "lines_processed": len(documents_to_insert),
+            "message": "Text uploaded and processed successfully"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing text: {str(e)}")
+
 @app.post("/search", response_model=List[SearchResult])
 async def search_documents(search_request: SearchRequest):
     """Search for documents using vector similarity"""
@@ -244,9 +297,38 @@ async def search_documents(search_request: SearchRequest):
         search_results = []
         for result in results:
             # Convert distance to similarity (lower distance = higher similarity)
-            # LanceDB returns squared L2 distance, convert to similarity score between 0-1
+            # LanceDB returns squared L2 distance, we need better similarity conversion
             distance = float(result["_distance"])
-            similarity_score = 1.0 / (1.0 + distance)  # Convert distance to similarity
+            
+            # Method 1: Cosine-like similarity (better for semantic similarity)
+            # Since embeddings are normalized, L2 distance relates to cosine similarity
+            # For normalized vectors: cosine_sim = 1 - (L2_distance^2 / 2)
+            # But let's use a more robust approach for better scores
+            
+            # Method 2: Exponential decay (gives higher scores for close matches)
+            similarity_score = np.exp(-distance)  # Exponential decay
+            
+            # Method 3: Alternative - Gaussian-like similarity
+            # similarity_score = np.exp(-distance / 2.0)  # Slower decay, higher scores
+            
+            # Method 4: Hybrid approach - combine exact matching with semantic similarity
+            # Check if query terms appear in content for boost
+            query_terms = search_request.query.lower().split()
+            content_lower = result["content"].lower()
+            exact_match_boost = 0.0
+            
+            # Boost score if exact terms are found
+            for term in query_terms:
+                if term in content_lower:
+                    exact_match_boost += 0.2  # 20% boost per matching term
+            
+            # Apply exponential similarity with exact match boost
+            similarity_score = min(1.0, np.exp(-distance) + exact_match_boost)
+            
+            # Debug logging for distance analysis
+            print(f"Debug - Distance: {distance:.4f}, Base similarity: {np.exp(-distance):.4f}, "
+                  f"Boost: {exact_match_boost:.2f}, Final: {similarity_score:.4f}, "
+                  f"Content: {result['content'][:50]}...")
             
             # Only include results above the similarity threshold
             if similarity_score >= search_request.min_similarity:

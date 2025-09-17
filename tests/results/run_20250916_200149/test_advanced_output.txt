@@ -1,0 +1,54 @@
+Test: Advanced Performance Test
+File: test_advanced.py
+Duration: 22.72s
+Return Code: 0
+Success: True
+============================================================
+STDOUT:
+[20:02:17] ℹ️  🚀 Starting Advanced PDF Search System Test Suite
+[20:02:17] 🧪 🚀 Testing System Startup
+[20:02:17] ℹ️  Starting Docker services...
+[20:02:20] ✅ Services started, waiting for health checks...
+[20:02:25] ✅ API Backend: Ready
+[20:02:30] ✅ API Backend: Ready
+[20:02:30] ✅ Vector Store: Ready
+[20:02:30] ✅ Streamlit UI: Ready
+[20:02:30] ✅ All services are healthy and ready
+[20:02:40] 🧪 📄 Testing Document Operations
+[20:02:40] ℹ️  Cleaning existing documents...
+[20:02:40] ✅ Cleanup successful
+[20:02:40] ℹ️  Uploading simple document...
+[20:02:40] ✅ Simple document uploaded successfully
+[20:02:40] ℹ️  Uploading table document...
+[20:02:40] ✅ Table document uploaded successfully
+[20:02:40] ℹ️  Testing document listing...
+[20:02:40] ✅ Document listing successful: 2 documents found
+[20:02:40] 🧪 🔍 Testing Search Functionality
+[20:02:40] ℹ️  Testing: Basic Text Search...
+[20:02:40] ❌ Basic Text Search: Failed - {"detail":"Not Found"}
+[20:02:40] ℹ️  Testing: Employee Search...
+[20:02:40] ❌ Employee Search: Failed - {"detail":"Not Found"}
+[20:02:40] ℹ️  Testing: Department Search...
+[20:02:40] ❌ Department Search: Failed - {"detail":"Not Found"}
+[20:02:40] ℹ️  Testing: Generic Search...
+[20:02:40] ❌ Generic Search: Failed - {"detail":"Not Found"}
+[20:02:40] ⚠️  Search functionality tests failed
+[20:02:40] 🧪 🗑️  Testing Document Deletion
+[20:02:40] ℹ️  Testing individual document deletion: 8d0685fb...
+[20:02:40] ✅ Individual document deletion successful
+[20:02:40] ℹ️  Testing bulk document deletion...
+[20:02:40] ✅ Bulk document deletion successful
+[20:02:40] ℹ️  Verifying deletion...
+[20:02:40] ✅ Deletion verification successful: No documents remaining
+[20:02:40] ℹ️  ============================================================
+[20:02:40] ℹ️  COMPREHENSIVE TEST RESULTS
+[20:02:40] ℹ️  ============================================================
+[20:02:40] ℹ️  System Startup:            PASS
+[20:02:40] ℹ️  Document Upload:           PASS (100% success)
+[20:02:40] ℹ️  Document Listing:          PASS
+[20:02:40] ℹ️  Search Functionality:      FAIL (0% success)
+[20:02:40] ℹ️  Document Deletion:         PASS
+[20:02:40] ℹ️  ------------------------------------------------------------
+[20:02:40] ✅ OVERALL ASSESSMENT: SYSTEM FUNCTIONAL
+[20:02:40] ℹ️  ------------------------------------------------------------
+[20:02:40] ℹ️  Detailed results saved to: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/test_results_advanced.json

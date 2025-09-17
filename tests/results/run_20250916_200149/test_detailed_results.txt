@@ -1,0 +1,80 @@
+PDF SEARCH SYSTEM - TEST RUN SUMMARY
+============================================================
+Run Date: 2025-09-16 20:03:19
+Run Directory: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149
+
+OVERALL RESULTS:
+Total Time:    0.10 seconds
+Total Tests:   8
+Passed:        8
+Failed:        0
+Skipped:       0
+Success Rate:  100.0%
+
+============================================================
+DETAILED TEST RESULTS:
+============================================================
+
+1. Quick Comprehensive Test
+   File: test_quick.py
+   Status: PASS
+   Duration: 10.43s
+   Return Code: 0
+   Output File: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149/test_quick_output.txt
+   --------------------------------------------------
+
+2. Simple Validation Test
+   File: test_simple.py
+   Status: PASS
+   Duration: 14.84s
+   Return Code: 0
+   Output File: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149/test_simple_output.txt
+   --------------------------------------------------
+
+3. Advanced Performance Test
+   File: test_advanced.py
+   Status: PASS
+   Duration: 22.72s
+   Return Code: 0
+   Output File: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149/test_advanced_output.txt
+   --------------------------------------------------
+
+4. System Integration Test
+   File: test_system.py
+   Status: PASS
+   Duration: 2.84s
+   Return Code: 0
+   Output File: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149/test_system_output.txt
+   --------------------------------------------------
+
+5. Comprehensive Professional Test
+   File: test_comprehensive.py
+   Status: PASS
+   Duration: 36.19s
+   Return Code: 0
+   Output File: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149/test_comprehensive_output.txt
+   --------------------------------------------------
+
+6. Table PDF Processing
+   File: test_table_pdf.py
+   Status: PASS
+   Duration: 0.14s
+   Return Code: 0
+   Output File: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149/test_table_pdf_output.txt
+   --------------------------------------------------
+
+7. Table Simple Functionality
+   File: test_table_simple.py
+   Status: PASS
+   Duration: 0.13s
+   Return Code: 0
+   Output File: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149/test_table_simple_output.txt
+   --------------------------------------------------
+
+8. Table Validation
+   File: test_table_validation.py
+   Status: PASS
+   Duration: 0.10s
+   Return Code: 0
+   Output File: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/results/run_20250916_200149/test_table_validation_output.txt
+   --------------------------------------------------

@@ -5,12 +5,12 @@
     "api-backend": {
       "accessible": true,
       "status_code": 200,
-      "response_time": 0.008945941925048828
+      "response_time": 0.009315252304077148
     },
     "vector-store": {
       "accessible": true,
       "status_code": 200,
-      "response_time": 0.0016357898712158203
+      "response_time": 0.0019481182098388672
     },
     "streamlit-ui": {
       "accessible": true,
@@ -22,12 +22,12 @@
     "api-backend": {
       "healthy": true,
       "url": "http://localhost:8000/health",
-      "response_time": 0.008392810821533203
+      "response_time": 0.00805807113647461
     },
     "vector-store": {
       "healthy": true,
       "url": "http://localhost:8001/health",
-      "response_time": 0.0016150474548339844
+      "response_time": 0.0015559196472167969
     },
     "streamlit-ui": {
       "healthy": true,

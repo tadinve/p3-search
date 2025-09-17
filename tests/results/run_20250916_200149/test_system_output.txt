@@ -1,0 +1,53 @@
+Test: System Integration Test
+File: test_system.py
+Duration: 2.84s
+Return Code: 0
+Success: True
+============================================================
+STDOUT:
+🚀 PDF Document Search System - Test Suite
+==================================================
+🔍 Checking service health...
+✅ API Backend is healthy
+✅ Vector Store is healthy
+
+📋 Testing API info...
+✅ API info endpoint working
+   Service: Document Search API
+   Version: 1.0.0
+
+🧪 Testing upload and search functionality...
+📄 Using PDF file: table_test_document.pdf
+
+📤 Testing PDF upload...
+✅ PDF uploaded successfully
+   Document ID: ca4e2c08-93d2-4d87-88e3-608a6f995bd6
+   Lines processed: 11
+
+⏳ Waiting for processing...
+
+🔍 Testing document search...
+
+🔎 Search results for 'machine learning':
+❌ Error during search for 'machine learning': string indices must be integers, not 'str'
+
+🔎 Search results for 'artificial intelligence':
+❌ Error during search for 'artificial intelligence': string indices must be integers, not 'str'
+
+🔎 Search results for 'data science':
+❌ Error during search for 'data science': string indices must be integers, not 'str'
+
+🔎 Search results for 'neural networks':
+❌ Error during search for 'neural networks': string indices must be integers, not 'str'
+
+📖 Testing document retrieval for ID: ca4e2c08-93d2-4d87-88e3-608a6f995bd6
+✅ Document retrieved successfully
+   Filename: table_test_document.pdf
+   Total lines: 11
+
+🎉 Test completed!
+
+💡 Next steps:
+   - Try uploading your own PDF files
+   - Experiment with different search queries
+   - Check the API documentation at http://localhost:8000/docs

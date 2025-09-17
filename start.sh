@@ -47,3 +47,6 @@ else
     trap "echo '🛑 Stopping services...'; kill $VECTOR_PID $API_PID; exit" INT
     wait
 fi
+
+# tests
+cd /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests && python test.py

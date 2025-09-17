@@ -1,0 +1,48 @@
+Test: Simple Validation Test
+File: test_simple.py
+Duration: 14.84s
+Return Code: 0
+Success: True
+============================================================
+STDOUT:
+ℹ️  🚀 Starting PDF Search System Test Suite
+ℹ️  Testing Docker Services
+ℹ️  Stopping existing services...
+ℹ️  Starting services with docker-compose...
+✅ Services started, waiting for health checks...
+✅ All services are healthy and accessible
+ℹ️  Testing Service Endpoints
+ℹ️  Testing api-backend at http://localhost:8000...
+✅ api-backend: Accessible (0.01s)
+ℹ️  Testing vector-store at http://localhost:8001...
+✅ vector-store: Accessible (0.00s)
+ℹ️  Testing streamlit-ui at http://localhost:8501...
+✅ streamlit-ui: Accessible
+ℹ️  Testing Health Endpoints
+ℹ️  Checking api-backend health...
+✅ api-backend: Healthy
+ℹ️  Checking vector-store health...
+✅ vector-store: Healthy
+ℹ️  Checking streamlit-ui health...
+✅ streamlit-ui: Healthy
+ℹ️  Testing API Functionality
+ℹ️  Testing document listing...
+✅ Document listing successful: 0 documents
+ℹ️  Testing search functionality...
+✅ Search functionality working: 4 results
+ℹ️  Testing delete all documents...
+✅ Delete all documents successful
+ℹ️  ============================================================
+ℹ️  TEST RESULTS SUMMARY
+ℹ️  ============================================================
+ℹ️  Docker Services Start:     PASS
+ℹ️  Services Health:           PASS
+ℹ️  Document Listing:          PASS
+ℹ️  Search Functionality:      PASS
+ℹ️  Delete Operations:         PASS
+ℹ️  ------------------------------------------------------------
+✅ OVERALL STATUS: ALL TESTS PASSED
+ℹ️  ------------------------------------------------------------
+ℹ️  Detailed results saved to: /Users/venkateshtadinada/Documents/VS-Code-Projects/p3-search/tests/test_results.json
+ℹ️  Test suite completed. Services are still running.
+ℹ️  Use 'docker compose down' to stop services.

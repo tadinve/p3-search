@@ -64,12 +64,12 @@
     "api_backend_health": {
       "accessible": true,
       "status_code": 200,
-      "response_time": 0.011164
+      "response_time": 0.011885
     },
     "vector_store_health": {
       "accessible": true,
       "status_code": 200,
-      "response_time": 0.001437
+      "response_time": 0.001286
     }
   },
   "initial_cleanup": {
@@ -80,94 +80,111 @@
       "deleted_documents": 1,
       "deleted_lines": 11
     },
-    "response_time": 0.025052
+    "response_time": 0.029626
   },
   "upload_simple": {
     "success": true,
     "status_code": 200,
     "response": {
-      "document_id": "f01263f8-ff7d-487d-8c6b-4ef429389a94",
+      "document_id": "45faf725-0643-4345-a968-e3e09e4fd854",
       "filename": "simple_test.pdf",
       "lines_processed": 1,
       "message": "PDF uploaded and processed successfully"
     },
-    "response_time": 0.070033
+    "response_time": 0.082123
   },
   "upload_table": {
     "success": true,
     "status_code": 200,
     "response": {
-      "document_id": "9587118f-f032-43f9-938f-0242a6931618",
+      "document_id": "433e0cf3-dd3d-4fee-a817-2089679a5234",
       "filename": "table_test.pdf",
       "lines_processed": 9,
       "message": "PDF uploaded and processed successfully"
     },
-    "response_time": 0.151981
+    "response_time": 0.13016
   },
   "list_documents": {
     "success": true,
     "status_code": 200,
     "documents": [
       {
-        "document_id": "9587118f-f032-43f9-938f-0242a6931618",
+        "document_id": "433e0cf3-dd3d-4fee-a817-2089679a5234",
         "filename": "table_test.pdf",
-        "upload_date": "2025-09-17T02:45:02.865006",
+        "upload_date": "2025-09-17T03:03:19.280503",
         "lines_count": 9,
         "first_page": 1,
         "last_page": 1
       },
       {
-        "document_id": "f01263f8-ff7d-487d-8c6b-4ef429389a94",
+        "document_id": "45faf725-0643-4345-a968-e3e09e4fd854",
         "filename": "simple_test.pdf",
-        "upload_date": "2025-09-17T02:45:02.793510",
+        "upload_date": "2025-09-17T03:03:19.196493",
         "lines_count": 1,
         "first_page": 1,
         "last_page": 1
       }
     ],
-    "response_time": 0.013285
+    "response_time": 0.015281
   },
   "search_basic": {
     "success": true,
     "status_code": 200,
     "results": {
       "query": "simple test document",
-      "response_time_ms": 24.75,
+      "response_time_ms": 32.98,
       "number_of_results": 1,
       "results": [
         {
-          "document_id": "f01263f8-ff7d-487d-8c6b-4ef429389a94",
+          "document_id": "45faf725-0643-4345-a968-e3e09e4fd854",
           "filename": "simple_test.pdf",
           "page_number": 1,
           "line_number": 1,
           "text_fragment": "This is a simple test document with basic text content for testing purposes.",
-          "similarity_score": 0.7404022233934698
+          "similarity_score": 1.0
         }
       ]
     },
-    "response_time": 0.026036
+    "response_time": 0.034104
   },
   "search_table": {
     "success": true,
     "status_code": 200,
     "results": {
       "query": "John Smith",
-      "response_time_ms": 22.26,
-      "number_of_results": 0,
-      "results": []
+      "response_time_ms": 22.89,
+      "number_of_results": 2,
+      "results": [
+        {
+          "document_id": "433e0cf3-dd3d-4fee-a817-2089679a5234",
+          "filename": "table_test.pdf",
+          "page_number": 1,
+          "line_number": 7,
+          "text_fragment": "EMP001 John Smith Engineering $85,000",
+          "similarity_score": 0.7590687346323746
+        },
+        {
+          "document_id": "433e0cf3-dd3d-4fee-a817-2089679a5234",
+          "filename": "table_test.pdf",
+          "page_number": 1,
+          "line_number": 2,
+          "text_fragment": "[TABLE] EMP001 | John Smith | Engineering | $85,000",
+          "similarity_score": 0.6679593677527155
+        }
+      ]
     },
-    "response_time": 0.023562
+    "response_time": 0.024192
   },
   "search_department": {
     "success": true,
     "status_code": 200,
     "results": {
       "query": "Engineering",
-      "response_time_ms": 26.24,
+      "response_time_ms": 15.34,
       "number_of_results": 0,
       "results": []
     },
-    "response_time": 0.027452
+    "response_time": 0.016836
   },
   "search_success_rate": 1.0,
   "delete_individual": {
@@ -175,11 +192,11 @@
     "status_code": 200,
     "response": {
       "message": "Document deleted successfully",
-      "document_id": "9587118f-f032-43f9-938f-0242a6931618",
+      "document_id": "433e0cf3-dd3d-4fee-a817-2089679a5234",
       "filename": "table_test.pdf",
       "deleted_lines": 9
     },
-    "response_time": 0.026879
+    "response_time": 0.031017
   },
   "delete_all": {
     "success": true,
@@ -189,6 +206,6 @@
       "deleted_documents": 1,
       "deleted_lines": 1
     },
-    "response_time": 0.012857
+    "response_time": 0.009826
   }
 }
