@@ -1,0 +1,10 @@
+# Command to List Services and Ports
+
+gcloud config set project p3-search
+
+gcloud run services list --platform managed --format="table(
+    name:label=SERVICE,
+    region:label=REGION,
+    status.url:label=URL,
+    spec.template.spec.containers[0].ports[0].containerPort:label='CONTAINER PORT'
+)"

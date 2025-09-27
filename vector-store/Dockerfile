@@ -1,24 +1,32 @@
+# Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
+# Set the working directory in the container
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install Python dependencies
+
+# Copy the dependencies file to the working directory
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY main.py .
 
-# Create directory for LanceDB data
-RUN mkdir -p lancedb_data
+RUN pip install --upgrade pip
+# Install any needed packages specified in requirements.txt as the non-root user
+# The --user flag ensures packages are installed in the user's home directory
+RUN pip install  -r requirements.txt
 
-# Expose port
+# --- Download and cache the model during the build ---
+# Copy the download script
+COPY download_model.py .
+
+# Create a directory for the models and run the download script
+RUN mkdir /app/models && python download_model.py
+
+# Copy the rest of the application code
+COPY . .
+
+# Make port 8001 available to the world outside this container
 EXPOSE 8001
 
-# Run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+# Use the PORT environment variable provided by Cloud Run
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT

@@ -552,4 +552,6 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    # Use the PORT environment variable provided by Cloud Run, fallback to 8001 for local dev
+    port = int(os.environ.get("PORT", 8001))
+    uvicorn.run(app, host="0.0.0.0", port=port)
